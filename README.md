@@ -102,7 +102,7 @@ exit
 ## 注意点
 - 既存のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
-- イメージファイルは展開すると約1GBの容量 
+- イメージファイルは展開すると約0.9GBの容量 
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．
 - パッケージを追加したいときは Containerfile に追加して `make build`
