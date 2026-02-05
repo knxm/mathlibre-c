@@ -1,6 +1,6 @@
 ENGINE ?= podman
-IMAGE   = mathlibre-c:v0.2
-NAME    = mathlibre-c_v0.2
+IMAGE   = mathlibre-c:v0.3
+NAME    = mathlibre-c_v0.3
 WORKDIR = /work
 HOSTNAME = mathlibre
 
