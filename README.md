@@ -5,7 +5,7 @@ MathLibre-c is a project for building containers with mathematical software.
 # 必要な環境
 - Linux + podman
 - Windows + WSL2 + podman
-- macOS + Homebrew + podman
+- macOS + Homebrew + qemu + podman
 
 のどれか
 
@@ -107,13 +107,13 @@ exit
 ## 注意点
 - 既存のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
-- macOS については未完成です。
+- macOS については未完成です。Xの対応ができていません．
 - イメージファイルは展開すると約860MB
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．
 - パッケージを追加したいときは Containerfile に追加して `make build`
 - Homebrew だと gmake かも（未確認）
-- macOS だと build でこける．
+- macOS だと build でこける．(qemuで対応）
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
