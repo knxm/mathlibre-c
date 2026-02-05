@@ -60,9 +60,8 @@ make run
 ```
 主に収録されているソフトウェアは
 - openxm (Risa/Asir)
-- git
-- emacs-nox
 - vim-tiny
+- nano
 
 終了するときは exit
 
@@ -102,7 +101,7 @@ exit
 
 ## 注意点
 - 既存のエディタで作業したいときは `make run`
-- コンテナの vim や emacs を利用したいときは `make shell`
+- コンテナの shell を利用したいときは `make shell`
 - イメージファイルは展開すると約1GBの容量 
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．

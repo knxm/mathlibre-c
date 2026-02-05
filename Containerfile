@@ -21,12 +21,11 @@ RUN echo "deb [trusted=yes] http://www.math.kobe-u.ac.jp/deb2/ unstable/" \
     > /etc/apt/sources.list.d/asir.list
 RUN touch /tmp/i-agree-with-asir-license
 
-# CAS のインストール
+# OpenXM のインストール
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    openxm \
-    emacs-nox \
     vim-tiny \
+    nano \
+    openxm \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
