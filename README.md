@@ -35,7 +35,18 @@ wsl --install
 ```
 2.
 ```
-brew install podman make
+brew install podman
+```
+
+3. macOSの場合だけ，podman 利用にあたって，最初だけ machine (macOS用Linux) を用意する必要がある．
+```
+podman machine init
+```
+```
+podman machine start
+```
+```
+exit
 ```
 
 # コンテナの構築
@@ -96,6 +107,7 @@ exit
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．
 - パッケージを追加したいときは Containerfile に追加して `make build`
+- Homebrew だと gmake かも（未確認）
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
