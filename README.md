@@ -35,7 +35,8 @@ wsl --install
 ```
 2.
 ```
-brew install podman
+brew install podman qemu
+brew install --cask xquartz
 ```
 
 3. macOSの場合だけ，podman 利用にあたって，最初だけ machine (macOS用Linux) を用意する必要がある．
@@ -106,6 +107,7 @@ exit
 ## 注意点
 - 既存のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
+- macOS については未完成です。
 - イメージファイルは展開すると約860MB
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．
