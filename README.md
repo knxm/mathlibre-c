@@ -21,15 +21,18 @@ yum install podman
 など
 
 ## Windows
-- [WSL2のインストール/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
-- WSL2 を起動後はLinuxと同様
+1. [WSL2のインストール/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
+2. WSL2 を起動後はLinuxと同様
 
 ## macOS
 1. [Homebrewのインストール/Homebrew](https://brew.sh/)
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-1. brew install podman 
+2.
+```
+brew install podman
+```
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
