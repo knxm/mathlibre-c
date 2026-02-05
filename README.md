@@ -58,12 +58,13 @@ make run
 ## Risa/Asir の利用
 `make run`を実行後にプロンプト
 ```
-user@d04dbdaf8dc1:/work$
+user@mathlibre:/work$
 ```
 が表示されたら
 ```openxm fep asir```
 
 ## 注意点
+- プロンプトの@以降はランダムに生成される？
 - イメージファイルは展開すると約1GBの容量 
 - 現状では作業場所 work は `make run` したディレクトリ
 - root にはなれない．

@@ -1,39 +1,25 @@
-FROM debian:wheezy
+FROM --platform=linux/i386 debian:7
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Debian7 アーカイブに切り替え
-RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
-    sed -i 's|security.debian.org|archive.debian.org|g' /etc/apt/sources.list && \
-    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid && \
-    apt-get update
+FROM --platform=linux/i386 debian:7
 
-# ビルド環境
-RUN apt-get install -y \
+ENV DEBIAN_FRONTEND=noninteractive
+
+# wheezy の archive / snapshot を正しく設定
+RUN printf "deb http://archive.debian.org/debian wheezy main\n" > /etc/apt/sources.list && \
+    printf "deb http://archive.debian.org/debian-security wheezy/updates main\n" >> /etc/apt/sources.list && \
+    printf 'Acquire::Check-Valid-Until "false";\nAcquire::AllowInsecureRepositories "true";\nAcquire::AllowDowngradeToInsecureRepositories "true";\n' > /etc/apt/apt.conf.d/99no-check-valid && \
+    apt-get -o Acquire::AllowInsecureRepositories=true update
+
+RUN apt-get -y --allow-unauthenticated install \
     build-essential \
     gcc \
     make \
     perl \
-    git \
     bison \
     flex \
     libgc-dev \
     libreadline-dev \
     ca-certificates \
     wget
-
-WORKDIR /work
-
-# GNU Sather 取得
-RUN wget https://ftp.gnu.org/gnu/sather/sather-1.2.3.tar.gz
-
-WORKDIR /work/gnu-sather
-
-# ビルド
-RUN make
-
-# PATH設定
-ENV PATH="/work/gnu-sather/Bin:${PATH}"
-
-CMD ["bash"]
-

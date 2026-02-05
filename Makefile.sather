@@ -5,7 +5,7 @@ build:
 	podman build -t $(IMAGE_NAME) -f Containerfile.sather .
 
 run:
-	podman run -it --rm --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	podman run -it --arch i386 --rm --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 shell:
 	podman run -it --rm \
