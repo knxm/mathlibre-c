@@ -87,12 +87,12 @@ quit();
 ```
 
 ## 注意点
-- プロンプトの@以降はランダムに生成される？
+- 既存のエディタで作業したいときは `make run`
+- コンテナの vim や emacs を利用したいときは `make shell`
 - イメージファイルは展開すると約1GBの容量 
-- 現状では作業場所 work は `make run` したディレクトリ
+- 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．
 - パッケージを追加したいときは Containerfile に追加して `make build`
-
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
