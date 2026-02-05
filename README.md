@@ -108,6 +108,7 @@ exit
 - root にはなれない．
 - パッケージを追加したいときは Containerfile に追加して `make build`
 - Homebrew だと gmake かも（未確認）
+- macOS だと build でこける．
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
