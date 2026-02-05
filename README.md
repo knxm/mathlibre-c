@@ -22,6 +22,10 @@ yum install podman
 
 ## Windows
 1. [WSL2のインストール/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
+ - PowerShell 上で実行
+```
+wsl --install
+```
 2. WSL2 を起動後はLinuxと同様
 
 ## macOS
@@ -33,6 +37,34 @@ yum install podman
 ```
 brew install podman
 ```
+
+# コンテナの構築
+```
+make build
+```
+
+# コンテナの利用
+```
+make run
+```
+主に収録されているソフトウェアは
+- openxm (Risa/Asir)
+- git
+- emacs-nox
+- vim-tiny
+
+終了するときは exit
+
+## Risa/Asir の利用
+`make run`を実行後に
+```openxm fep asir```
+
+## 注意点
+- イメージファイルは展開すると約1GBの容量 
+- 現状では作業場所 work は `make run` したディレクトリ
+- root にはなれない．
+- パッケージを追加したいときは Containerfile に追加して `make build`
+
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
