@@ -9,33 +9,23 @@ HOSTNAME = mathlibre
 build:
 	$(ENGINE) build -t $(IMAGE) .
 
+RUN_OPTS = -it --rm \
+	--name $(NAME) \
+	--hostname $(HOSTNAME) \
+	--userns=keep-id \
+	-u $(shell id -u):$(shell id -g) \
+	-e DISPLAY=$(DISPLAY) \
+	-e XAUTHORITY=$(XAUTHORITY) \
+	-v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+	-v $(XAUTHORITY):$(XAUTHORITY):ro \
+	-v $(PWD):$(WORKDIR):Z \
+	-w $(WORKDIR)
+
 run:
-	$(ENGINE) run -it --rm \
-		--name $(NAME) \
-                --hostname $(HOSTNAME) \
-                --userns=keep-id \
-                -u $(shell id -u):$(shell id -g) \
-                -e DISPLAY=$(DISPLAY) \
-                -e XAUTHORITY=$(XAUTHORITY) \
-                -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-                -v $(XAUTHORITY):$(XAUTHORITY):ro \
-		-v $(PWD):$(WORKDIR):Z \
-		-w $(WORKDIR) \
-		$(IMAGE) openxm fep asir
+	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
 
 shell:
-	$(ENGINE) run -it --rm \
-		--name $(NAME) \
-                --hostname $(HOSTNAME) \
-                --userns=keep-id \
-                -u $(shell id -u):$(shell id -g) \
-                -e DISPLAY=$(DISPLAY) \
-                -e XAUTHORITY=$(XAUTHORITY) \
-                -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
-                -v $(XAUTHORITY):$(XAUTHORITY):ro \
-		-v $(PWD):$(WORKDIR):Z \
-		-w $(WORKDIR) \
-		$(IMAGE) bash
+	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
 stop:
 	-$(ENGINE) stop $(NAME)
