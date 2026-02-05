@@ -87,13 +87,17 @@ quit();
 user@mathlibre:/work$ 
 ```
 が表示される．
+
 Risa/Asir を起動するには
-```openxm fep asir```
+```
+openxm fep asir
+```
 
 Risa/Asir の終了は
 ```
 quit();
 ```
+
 コンテナの終了は
 ```
 exit
