@@ -1,6 +1,6 @@
 ENGINE ?= podman
-IMAGE   = mathlibre-c:v0.1
-NAME    = mathlibre-c
+IMAGE   = mathlibre-c:v0.2
+NAME    = mathlibre-c_v0.2
 WORKDIR = /work
 
 .PHONY: build run shell stop rm clean size logs
@@ -11,6 +11,8 @@ build:
 run:
 	$(ENGINE) run -it --rm \
 		--name $(NAME) \
+                --userns=keep-id \
+                -u $(shell id -u):$(shell id -g) \
 		-v $(PWD):$(WORKDIR):Z \
 		-w $(WORKDIR) \
 		$(IMAGE) bash

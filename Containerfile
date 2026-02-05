@@ -23,9 +23,7 @@ RUN touch /tmp/i-agree-with-asir-license
 
 # CAS のインストール
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    singular \
-    maxima maxima-doc info\
-    macaulay2 \
+    git \
     openxm \
     emacs-nox \
     vim-tiny \
@@ -44,5 +42,4 @@ WORKDIR /home/user
 RUN mkdir -p /home/user/work
 
 CMD ["bash"]
-
 
