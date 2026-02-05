@@ -13,6 +13,10 @@ run:
 		--name $(NAME) \
                 --userns=keep-id \
                 -u $(shell id -u):$(shell id -g) \
+                -e DISPLAY=$(DISPLAY) \
+                -e XAUTHORITY=$(XAUTHORITY) \
+                -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+                -v $(XAUTHORITY):$(XAUTHORITY):ro \
 		-v $(PWD):$(WORKDIR):Z \
 		-w $(WORKDIR) \
 		$(IMAGE) bash
