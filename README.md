@@ -56,12 +56,35 @@ make run
 終了するときは exit
 
 ## Risa/Asir の利用
-`make run`を実行後にプロンプト
+`make run`を実行後に OpenXM プロンプト
 ```
-user@mathlibre:/work$
+OpenXM/Risa/Asir-Contrib $Revision$ (20250117), Copyright 2000-2025, OpenXM.org committers
+helph(); [html help], ox_help(0); ox_help("keyword"); ox_grep("keyword");
+     for help messages (unix version only).
+http://www.math.kobe-u.ac.jp/OpenXM/Current/doc/index-doc.html
+[2113] 
 ```
-が表示されたら
+が表示されたら Risa/Asir の命令を入力できる．
+コンテナの終了は Risa/Asir の終了命令
+```
+quit();
+```
+
+
+## shell の利用
+`make shell`を実行後に bash プロンプト
+```
+user@mathlibre:/work$ 
+
+```
+が表示される．
+Risa/Asir を起動するには
 ```openxm fep asir```
+
+Risa/Asir の終了は
+```
+quit();
+```
 
 ## 注意点
 - プロンプトの@以降はランダムに生成される？

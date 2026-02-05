@@ -21,10 +21,21 @@ run:
                 -v $(XAUTHORITY):$(XAUTHORITY):ro \
 		-v $(PWD):$(WORKDIR):Z \
 		-w $(WORKDIR) \
-		$(IMAGE) bash
+		$(IMAGE) openxm fep asir
 
 shell:
-	$(ENGINE) exec -it $(NAME) bash
+	$(ENGINE) run -it --rm \
+		--name $(NAME) \
+                --hostname $(HOSTNAME) \
+                --userns=keep-id \
+                -u $(shell id -u):$(shell id -g) \
+                -e DISPLAY=$(DISPLAY) \
+                -e XAUTHORITY=$(XAUTHORITY) \
+                -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+                -v $(XAUTHORITY):$(XAUTHORITY):ro \
+		-v $(PWD):$(WORKDIR):Z \
+		-w $(WORKDIR) \
+		$(IMAGE) bash
 
 stop:
 	-$(ENGINE) stop $(NAME)
