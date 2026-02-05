@@ -56,7 +56,11 @@ make run
 終了するときは exit
 
 ## Risa/Asir の利用
-`make run`を実行後に
+`make run`を実行後にプロンプト
+```
+user@d04dbdaf8dc1:/work$
+```
+が表示されたら
 ```openxm fep asir```
 
 ## 注意点
