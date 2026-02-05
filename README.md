@@ -35,7 +35,7 @@ wsl --install
 ```
 2.
 ```
-brew install podman
+brew install podman make
 ```
 
 # コンテナの構築
