@@ -75,7 +75,6 @@ quit();
 `make shell`を実行後に bash プロンプト
 ```
 user@mathlibre:/work$ 
-
 ```
 が表示される．
 Risa/Asir を起動するには
