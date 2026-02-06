@@ -55,16 +55,11 @@ exit
 make build
 ```
 
-# コンテナの利用
-```
-make run
-```
+# コンテナの内容
 主に収録されているソフトウェアは
 - openxm (Risa/Asir)
 - vim-tiny
 - nano
-
-終了するときは exit
 
 ## Risa/Asir の利用
 `make run`を実行後に OpenXM プロンプト
@@ -80,7 +75,6 @@ http://www.math.kobe-u.ac.jp/OpenXM/Current/doc/index-doc.html
 ```
 quit();
 ```
-
 
 ## shell の利用
 `make shell`を実行後に bash プロンプト
@@ -99,7 +93,7 @@ Risa/Asir の終了は
 quit();
 ```
 
-コンテナの終了は
+shellの終了は
 ```
 exit
 ```
@@ -114,6 +108,7 @@ exit
 - パッケージを追加したいときは Containerfile に追加して `make build`
 - Homebrew だと gmake かも（未確認）
 - macOS だと build でこける．(qemuで対応）
+- Hubへ未登録
 
 # Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
