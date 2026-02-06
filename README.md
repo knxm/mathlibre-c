@@ -49,6 +49,10 @@ podman machine start
 ```
 exit
 ```
+4. XQuartzの実行
+```
+open -a xquartz
+```
 
 # コンテナの構築
 ```
@@ -59,7 +63,8 @@ make build
 ```
 make run
 ```
-主に収録されているソフトウェアは
+
+# 主に収録されているソフトウェアは
 - openxm (Risa/Asir)
 - vim-tiny
 - nano

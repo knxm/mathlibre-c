@@ -4,7 +4,7 @@ NAME    = mathlibre-c_v0.3
 WORKDIR = /work
 HOSTNAME = mathlibre
 
-DISPLAY ?= $(DISPLAY)
+DISPLAY ?= :0
 XAUTHORITY ?= $(HOME)/.Xauthority
 
 UNAME_S := $(shell uname -s 2>/dev/null || echo Unknown)
