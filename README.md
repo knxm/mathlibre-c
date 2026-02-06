@@ -49,14 +49,27 @@ podman machine start
 ```
 exit
 ```
+4. XQuartzの実行
+```
+open -a xquartz
+```
 
 # コンテナの構築
 ```
 make build
 ```
 
+<<<<<<< HEAD
 # コンテナの内容
 主に収録されているソフトウェアは
+=======
+# コンテナの利用
+```
+make run
+```
+
+# 主に収録されているソフトウェアは
+>>>>>>> df762f18d9855da9b25d65d23c397e37c84355ec
 - openxm (Risa/Asir)
 - vim-tiny
 - nano
