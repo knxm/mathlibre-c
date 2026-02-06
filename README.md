@@ -33,23 +33,26 @@ wsl --install
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-2.
+2. podman のインストール
 ```
-brew install podman qemu
+brew install podman
+```
+3. イメージはamd64なので，Arm系CPUの場合はqemuが必要．IntelMacは必要なし．
+```
+brew install qemu
+```
+4. Xのインストール
+```
 brew install --cask xquartz
 ```
-
-3. macOSの場合だけ，podman 利用にあたって，最初だけ machine (macOS用Linux) を用意する必要がある．
+5. macOSの場合だけ，podman 利用にあたって，最初だけ machine (macOS用Linux) を用意する必要がある．
 ```
 podman machine init
 ```
 ```
 podman machine start
 ```
-```
-exit
-```
-4. XQuartzの実行
+6. XQuartzの実行
 ```
 open -a xquartz
 ```
@@ -59,17 +62,8 @@ open -a xquartz
 make build
 ```
 
-<<<<<<< HEAD
 # コンテナの内容
 主に収録されているソフトウェアは
-=======
-# コンテナの利用
-```
-make run
-```
-
-# 主に収録されているソフトウェアは
->>>>>>> df762f18d9855da9b25d65d23c397e37c84355ec
 - openxm (Risa/Asir)
 - vim-tiny
 - nano
