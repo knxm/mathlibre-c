@@ -56,6 +56,10 @@ podman machine start
 ```
 open -a xquartz
 ```
+7. Xを用いる際は xhost の接続許可が必要
+```
+xhost +localhost
+```
 
 # コンテナの構築
 ```
