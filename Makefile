@@ -1,8 +1,9 @@
 ENGINE ?= podman
-IMAGE   = mathlibre-c:v0.3
-NAME    = mathlibre-c_v0.3
+IMAGE   = openxm:v0.1
+NAME    = openxm_v0.1
 WORKDIR = /work
 HOSTNAME = mathlibre
+PLATFORM ?= linux/amd64
 
 UNAME_S := $(shell uname -s)
 
@@ -26,6 +27,7 @@ RUN_OPTS = -it --rm \
 	--name $(NAME) \
 	--hostname $(HOSTNAME) \
 	--userns=keep-id \
+        --platform=$(PLATFORM) \
 	-u $(UID):$(GID) \
 	-e DISPLAY=$(DISPLAY) \
 	-e XAUTHORITY=$(XAUTHORITY) \
@@ -42,7 +44,7 @@ RUN_OPTS = -it --rm \
 .PHONY: build run shell stop rm clean size logs
 
 build:
-	$(ENGINE) build -t $(IMAGE) .
+	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
 
 run:
