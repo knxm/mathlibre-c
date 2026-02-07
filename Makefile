@@ -50,18 +50,18 @@ endif
 # 実行共通オプション
 # ------------------------
 RUN_OPTS = \
-	-it --rm \
-	--name $(NAME) \
-	--hostname $(HOSTNAME) \
-	--userns=keep-id \
-	--platform=$(PLATFORM) \
-	-u $(UID):$(GID) \
-	-e DISPLAY=$(X11_DISPLAY) \
-        $(XAUTH) \
-	$(XVOL) \
-        $(XAUTHVOL) \
-	-v $(PWD):$(WORKDIR):Z \
-	-w $(WORKDIR)
+  -it --rm \
+  --name $(NAME) \
+  --hostname $(HOSTNAME) \
+  --userns=keep-id \
+  --platform=$(PLATFORM) \
+  -u $(UID):$(GID) \
+  -e DISPLAY=$(X11_DISPLAY) \
+  $(XAUTH) \
+  $(XVOL) \
+  $(XAUTHVOL) \
+  -v $(PWD):$(WORKDIR):Z \
+  -w $(WORKDIR)
 
 # ------------------------
 # targets
@@ -69,26 +69,26 @@ RUN_OPTS = \
 .PHONY: build run shell stop rm clean size logs
 
 build:
-	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
+  $(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
 
 run:
-	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
+  $(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
 
 shell:
-	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
+  $(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
 stop:
-	-$(ENGINE) stop $(NAME)
+  -$(ENGINE) stop $(NAME)
 
 rm:
-	-$(ENGINE) rm $(NAME)
+  -$(ENGINE) rm $(NAME)
 
 clean:
-	$(ENGINE) rmi $(IMAGE)
+  $(ENGINE) rmi $(IMAGE)
 
 size:
-	$(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
+  $(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
 
 logs:
-	$(ENGINE) logs $(NAME)
+  $(ENGINE) logs $(NAME)
