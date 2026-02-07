@@ -3,7 +3,7 @@ MathLibre-c is a project for building containers with mathematical software.
 数学ソフトウェア環境のためのコンテナを開発するプロジェクト
 
 # 必要な環境
-- Linux + podman
+- Linux + X11 + podman
 - Windows + WSL2 + podman
 - macOS + Homebrew + qemu + podman
 
