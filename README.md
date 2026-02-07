@@ -37,7 +37,7 @@ wsl --install
 ```
 brew install podman
 ```
-3. イメージはamd64なので，Arm系CPUの場合はqemuが必要．IntelMacは必要なし．
+3. イメージはamd64なので，M?等のArm系CPUの場合はqemuが必要．IntelMacは必要なし．
 ```
 brew install qemu
 ```
@@ -113,12 +113,10 @@ exit
 - コンテナ名称をopenxmに変更
 - 既存のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
-- WSL2のXの対応が未完成
 - イメージファイルは展開すると約860MB
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
 - root にはなれない．
 - パッケージを追加したいときは Containerfile に追加して `make build`
-- Homebrew だと gmake かも（未確認）
 - Hubへ未登録
 
 # Reference
