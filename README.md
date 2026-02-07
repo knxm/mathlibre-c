@@ -84,7 +84,7 @@ http://www.math.kobe-u.ac.jp/OpenXM/Current/doc/index-doc.html
 が表示されたら Risa/Asir の命令を入力できる．
 コンテナの終了は Risa/Asir の終了命令
 ```
-quit();
+quit;
 ```
 
 ## shell の利用
@@ -101,7 +101,7 @@ openxm fep asir
 
 Risa/Asir の終了は
 ```
-quit();
+quit;
 ```
 
 shellの終了は
