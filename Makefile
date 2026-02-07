@@ -32,7 +32,9 @@ ifeq ($(UNAME_S),Linux)
   else
     # ネイティブ Linux
     X11_DISPLAY := :0
+    XAUTH := -e XAUTHORITY=$(XAUTHORITY)
     XVOL := -v /tmp/.X11-unix:/tmp/.X11-unix:rw
+    XAUTHVOL := -v $(XAUTHORITY):$(XAUTHORITY):ro
   endif
 endif
 
@@ -55,7 +57,9 @@ RUN_OPTS = \
 	--platform=$(PLATFORM) \
 	-u $(UID):$(GID) \
 	-e DISPLAY=$(X11_DISPLAY) \
+        $(XAUTH) \
 	$(XVOL) \
+        $(XAUTHVOL) \
 	-v $(PWD):$(WORKDIR):Z \
 	-w $(WORKDIR)
 
