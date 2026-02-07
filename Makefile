@@ -4,38 +4,40 @@ NAME    = mathlibre-c_v0.3
 WORKDIR = /work
 HOSTNAME = mathlibre
 
-DISPLAY ?= :0
+UNAME_S := $(shell uname -s)
+
+# OSの判定
+ifeq ($(UNAME_S),Linux)
+        DISPLAY ?= :0
+        XSOCK ?= /tmp/.X11-unix
+        XVOL ?= -v $(XSOCK):$(XSOCK):rw
+else ifeq ($(UNAME_S),Darwin)
+        DISPLAY = host.docker.internal:0
+        XSOCK ?=
+        XVOL ?=
+endif
+
 XAUTHORITY ?= $(HOME)/.Xauthority
 
-UNAME_S := $(shell uname -s 2>/dev/null || echo Unknown)
-
-# OSごとの調整
-ifeq ($(UNAME_S),Darwin)
-        # macOS (XQuartz + Podman machine)
-	X11_SOCK = /tmp/.X11-unix
-	PLATFORM = --platform=linux/amd64
-else
-        # Linux / WSL2
-	X11_SOCK = /tmp/.X11-unix
-	PLATFORM =
-endif
+UID := $(shell id -u)
+GID := $(shell id -g)
 
 RUN_OPTS = -it --rm \
 	--name $(NAME) \
 	--hostname $(HOSTNAME) \
 	--userns=keep-id \
-	-u $(shell id -u):$(shell id -g) \
+	-u $(UID):$(GID) \
 	-e DISPLAY=$(DISPLAY) \
 	-e XAUTHORITY=$(XAUTHORITY) \
-        -v $(X11_SOCK):/tmp/.X11-unix:ro \
+        $(XVOL) \
 	-v $(PWD):$(WORKDIR):Z \
-	-w $(WORKDIR)
+	-w $(WORKDIR) \
 
 
 # XAUTHORITY が実在する時だけマウント
-ifneq ($(wildcard $(XAUTHORITY)),)
+#ifneq ($(wildcard $(XAUTHORITY)),)
 	RUN_OPTS += -e XAUTHORITY=$(XAUTHORITY) -v $(XAUTHORITY):$(XAUTHORITY):ro
-endif
+#endif
 
 .PHONY: build run shell stop rm clean size logs
 
