@@ -17,7 +17,7 @@ apt install podman
 ```
 もしくは
 ```
-yum install podman
+dnf install podman
 ``` 
 など
 
