@@ -2,10 +2,6 @@ FROM --platform=linux/i386 debian:7
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-FROM --platform=linux/i386 debian:7
-
-ENV DEBIAN_FRONTEND=noninteractive
-
 # wheezy の archive / snapshot を正しく設定
 RUN printf "deb http://archive.debian.org/debian wheezy main\n" > /etc/apt/sources.list && \
     printf "deb http://archive.debian.org/debian-security wheezy/updates main\n" >> /etc/apt/sources.list && \
@@ -23,3 +19,16 @@ RUN apt-get -y --allow-unauthenticated install \
     libreadline-dev \
     ca-certificates \
     wget
+
+# GNU Sather 取得
+WORKDIR /opt
+RUN wget https://ftp.gnu.org/gnu/sather/sather-1.2.3.tar.gz
+RUN tar xvzf sather-1.2.3.tar.gz
+RUN ln -s sather-1.2.3 sather
+
+WORKDIR /opt/sather
+
+# PATH設定
+ENV PATH="/opt/sather/Bin:${PATH}"
+
+CMD ["bash"]

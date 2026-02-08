@@ -1,8 +1,8 @@
-IMAGE_NAME = sather-debian7_v0.1
-CONTAINER_NAME = sather-c:v0.1
+IMAGE_NAME = sather_v0.1
+CONTAINER_NAME = sather:v0.1
 
 build:
-	podman build -t $(IMAGE_NAME) -f Containerfile.sather .
+	podman build -t $(IMAGE_NAME) -f Containerfile .
 
 run:
 	podman run -it --arch i386 --rm --name $(CONTAINER_NAME) $(IMAGE_NAME)
