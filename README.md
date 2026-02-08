@@ -4,6 +4,7 @@ MathLibre-c is a project for building containers with mathematical software.
 
 # 必要な環境
 - Linux + X11 + podman
+- Linux + Wayland + XWayland + podman
 - Windows + WSL2 + podman
 - macOS + Homebrew + qemu + podman
 
@@ -70,7 +71,6 @@ make build
 主に収録されているソフトウェアは
 - openxm (Risa/Asir)
 - vim-tiny
-- nano
 
 ## Risa/Asir の利用
 `make run`を実行後に OpenXM プロンプト
@@ -111,7 +111,7 @@ exit
 
 ## 注意点
 - コンテナ名称をopenxmに変更
-- 既存のエディタで作業したいときは `make run`
+- ホスト側のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
 - イメージファイルは展開すると約860MB
 - 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ

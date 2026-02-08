@@ -24,7 +24,6 @@ RUN touch /tmp/i-agree-with-asir-license
 # OpenXM のインストール
 RUN apt-get update && apt-get install -y --no-install-recommends \
     vim-tiny \
-    nano \
     openxm \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
