@@ -1,15 +1,93 @@
-IMAGE_NAME = sather_v0.2
-CONTAINER_NAME = sather_v0.2
+ENGINE    ?= podman
+IMAGE     ?= sather:v0.2
+NAME      ?= sather_v0.2
+HOSTNAME  ?= mathlibre
+WORKDIR   ?= /work
+
+UNAME_S := $(shell uname -s)
+UNAME_R := $(shell uname -r)
+
+UID := $(shell id -u)
+GID := $(shell id -g)
+PWD := $(shell pwd)
+
+PLATFORM ?= linux/i386
+
+# ------------------------
+# Initialize X11
+# ------------------------
+X11_DISPLAY :=
+XVOL :=
+XAUTH :=
+XAUTHVOL :=
+
+# ------------------------
+# Linux / WSLg
+# ------------------------
+ifeq ($(UNAME_S),Linux)
+	# WSLg 
+	ifneq (,$(findstring microsoft,$(UNAME_R)))
+		X11_DISPLAY := :0
+		XVOL := -v /tmp/.X11-unix:/tmp/.X11-unix:rw
+	else
+		# Native Linux
+		X11_DISPLAY := :0
+		XAUTH := -e XAUTHORITY=$(XAUTHORITY)
+		XVOL := -v /tmp/.X11-unix:/tmp/.X11-unix:rw
+		XAUTHVOL := -v $(XAUTHORITY):$(XAUTHORITY):ro
+	endif
+endif
+
+# ------------------------
+# macOS + XQuartz
+# ------------------------
+ifeq ($(UNAME_S),Darwin)
+	X11_DISPLAY := host.docker.internal:0
+	XVOL :=
+endif
+
+# ------------------------
+# run options
+# ------------------------
+RUN_OPTS = \
+	-it --rm \
+	--name $(NAME) \
+	--hostname $(HOSTNAME) \
+	--userns=keep-id \
+	--platform=$(PLATFORM) \
+	-u $(UID):$(GID) \
+	-e DISPLAY=$(X11_DISPLAY) \
+	$(XAUTH) \
+	$(XVOL) \
+	$(XAUTHVOL) \
+	-v $(PWD):$(WORKDIR):Z \
+	-w $(WORKDIR)
+
+# ------------------------
+# targets
+# ------------------------
+.PHONY: build run shell stop rm clean size logs
 
 build:
-	podman build -t $(IMAGE_NAME) -f Containerfile .
+	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
-run:
-	podman run -it --arch i386 --rm --name $(CONTAINER_NAME) $(IMAGE_NAME)
+#run:
+#	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
 
 shell:
-	podman run -it --rm \
-        --arch i386 --name $(CONTAINER_NAME) $(IMAGE_NAME) bash
+	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
+
+stop:
+	$(ENGINE) stop $(NAME)
+
+rm:
+	$(ENGINE) rm $(NAME)
 
 clean:
-	podman rmi $(IMAGE_NAME)
+	$(ENGINE) rmi $(IMAGE)
+
+size:
+	$(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
+
+logs:
+	$(ENGINE) logs $(NAME)

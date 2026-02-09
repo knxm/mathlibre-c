@@ -13,14 +13,14 @@ RUN printf "deb http://archive.debian.org/debian wheezy main\n" > /etc/apt/sourc
 # Development environment
 RUN apt-get update && apt-get -y --allow-unauthenticated install --no-install-recommends \
     build-essential \
-    gcc \
-    make \
-    perl \
+    ca-certificates \
+    libgc-dev \
     bison \
     flex \
-    libgc-dev \
-    libreadline-dev \
-    ca-certificates \
+    libncurses5-dev \
+    tcl-dev \
+    tk-dev \
+    texinfo \
     wget \
     vim-tiny 
 
