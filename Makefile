@@ -14,7 +14,7 @@ PWD := $(shell pwd)
 PLATFORM ?= linux/amd64
 
 # ------------------------
-# X11 共通オプション初期化
+# Initialize X11
 # ------------------------
 X11_DISPLAY :=
 XVOL :=
@@ -25,12 +25,12 @@ XAUTHVOL :=
 # Linux / WSLg
 # ------------------------
 ifeq ($(UNAME_S),Linux)
-	# WSLg 判定 (microsoft を含む)
+	# WSLg 
 	ifneq (,$(findstring microsoft,$(UNAME_R)))
 		X11_DISPLAY := :0
 		XVOL := -v /tmp/.X11-unix:/tmp/.X11-unix:rw
 	else
-		# ネイティブ Linux
+		# Native Linux
 		X11_DISPLAY := :0
 		XAUTH := -e XAUTHORITY=$(XAUTHORITY)
 		XVOL := -v /tmp/.X11-unix:/tmp/.X11-unix:rw
@@ -47,7 +47,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 # ------------------------
-# 実行共通オプション
+# run options
 # ------------------------
 RUN_OPTS = \
 	-it --rm \
