@@ -31,6 +31,10 @@ RUN tar xvzf sather-1.2.3.tar.gz
 RUN ln -s sather-1.2.3 sather
 RUN rm sather-1.2.3.tar.gz
 
+# Collision of sather and glibc
+#RUN sed -i 's/^#define isnormal(/#ifndef isnormal\n#define isnormal(/' \
+#  /opt/sather/System/Common/runtime.h
+
 # Make Sather
 WORKDIR /opt/sather
 RUN make
