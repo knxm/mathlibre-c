@@ -1,5 +1,5 @@
-IMAGE_NAME = sather_v0.1
-CONTAINER_NAME = sather:v0.1
+IMAGE_NAME = sather_v0.2
+CONTAINER_NAME = sather_v0.2
 
 build:
 	podman build -t $(IMAGE_NAME) -f Containerfile .
