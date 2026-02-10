@@ -71,9 +71,6 @@ RUN_OPTS = \
 build:
 	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
-#run:
-#	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
-
 shell:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
