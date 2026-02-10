@@ -31,14 +31,14 @@ etc.
 
 ### Windows
 
-1. [Install WSL2/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
+1. [How to install Linux on Windows with WSL2/Microsoft](https://learn.microsoft.com/en-us/windows/wsl/installI)
    Run the following PowerShell:
 
 ```powershell
 wsl --install
 ```
 
-2. After satarting WSL2, follow the steps as for Linux
+2. After starting WSL2, follow the steps as for Linux
 
 ### macOS
 
@@ -92,13 +92,7 @@ The main included software is:
 - openxm (Risa/Asir)
 - vim-tiny
 
-## Getting Container image
-
-```bash
-make pull
-```
-
-## Using Risa/Asir
+## Use Risa/Asir
 
 After running `make run`, the OpenXM prompt appears:
 
@@ -117,7 +111,7 @@ To exit the container, use the Risa/Asir exit command:
 quit;
 ```
 
-## Using the shell
+## Use the shell
 
 After running `make shell`, the bash prompt appears:
 
@@ -141,6 +135,12 @@ To exit the shell:
 
 ```bash
 exit
+```
+
+## Get the container image
+
+```bash
+make pull
 ```
 
 ## Build the container
