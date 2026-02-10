@@ -76,7 +76,7 @@ build:
 	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
 pull:
-	$(ENGINE) pull $(IMAGE)
+	$(ENGINE) pull --platform=$(PLATFORM) $(IMAGE)
 
 run:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir

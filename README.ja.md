@@ -171,7 +171,6 @@ make build
 
 ## 注意点
 - コンテナ名称をopenxmに変更
-- 最初に `make pull` でコンテナイメージを ghcr.io から取得
 - ホスト側のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
 - イメージファイルは展開すると約860MB

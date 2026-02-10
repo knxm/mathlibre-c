@@ -154,7 +154,6 @@ make build
 ## Notes
 
 - The container name has been changed to openxm.
-- At first `make pull` you can get the container image from ghcr.io.
 - Use `make run` if you want to work with an editor on the host side.
 - Use `make shell` if you want to use the container’s shell.
 - The image size is about 860 MB when unpacked.
