@@ -143,7 +143,7 @@ exit
 make pull
 ```
 
-## Build the container
+## Build the container image
 
 For adding packages, edit Containerfile and rebuild it.
 

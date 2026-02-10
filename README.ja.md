@@ -101,12 +101,6 @@ git clone https://github.com/knxm/mathlibre-c
 cd mathlibre-c
 ```
 
-## コンテナの取得
-
-```
-make pull
-```
-
 ## コンテナの内容
 
 主に収録されているソフトウェアは
@@ -159,6 +153,12 @@ shellの終了は
 
 ```
 exit
+```
+
+## コンテナの取得
+
+```
+make pull
 ```
 
 ## コンテナのビルド
