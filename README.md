@@ -17,7 +17,7 @@ apt install podman
 or
 ```bash
 dnf install podman
-``
+```
 etc.
 
 ## Windows
