@@ -121,5 +121,5 @@ exit
 - Hubへ未登録
 
 ## Reference
-- [コンテナーの構築、実行、および管理](https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers/index)
+- [コンテナーの構築、実行、および管理 (docs.redhat.com)](https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers/index)
 

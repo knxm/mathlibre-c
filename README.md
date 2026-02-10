@@ -113,5 +113,5 @@ exit
 - Not registered on any hub yet.
 
 ## Reference
-- [Building, running, and managing containers](
+- [Building, running, and managing containers (docs.redhat.com)](
 https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers/index)
