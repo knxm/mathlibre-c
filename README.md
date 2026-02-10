@@ -11,7 +11,7 @@ One of the following environments is required:
 - Linux + X11 + git + podman
 - Linux + Wayland + XWayland + git + podman
 - Windows + WSL2 + git + podman
-- macOS + Homebrew + qemu + git + podman
+- macOS + Homebrew + qemu + Xquartz + git + podman
 
 ### Linux
 
@@ -114,31 +114,26 @@ quit;
 ## Use the shell
 
 After running `make shell`, the bash prompt appears:
-
 ```text
 user@mathlibre:/work$ 
 ```
 
 To start Risa/Asir:
-
 ```bash
 openxm fep asir
 ```
 
 To exit Risa/Asir:
-
 ```asir
 quit;
 ```
 
 To exit the shell:
-
 ```bash
 exit
 ```
 
 ## Get the container image
-
 ```bash
 make pull
 ```
@@ -146,7 +141,6 @@ make pull
 ## Build the container image
 
 For adding packages, edit Containerfile and rebuild it.
-
 ```bash
 make build
 ```
