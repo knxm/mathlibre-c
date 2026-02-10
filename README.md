@@ -3,15 +3,15 @@
 
 MathLibre-c is a project for building containers for mathematical software environments.
 
-# Requirements
+## Requirements
 One of the following environments is required:
 - Linux + X11 + podman  
 - Linux + Wayland + XWayland + podman  
 - Windows + WSL2 + podman  
 - macOS + Homebrew + qemu + podman  
 
-## Linux
-### Install the podman package
+### Linux
+Install the podman package
 ```bash
 apt install podman
 ```
@@ -21,7 +21,7 @@ dnf install podman
 ```
 etc.
 
-## Windows
+### Windows
 1. [Install WSL2/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
 Run the following PowerShell:
 ```powershell
@@ -29,7 +29,7 @@ wsl --install
 ```
 2. After satarting WSL2, follow the steps as for Linux
 
-## macOS
+### macOS
 1. [Install Homebrew/Homebrew](https://brew.sh/)
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -60,12 +60,12 @@ open -a xquartz
 xhost +localhost
 ```
 
-# Build the container
+## Build the container
 ```bash
 make build
 ```
 
-# Container contents
+## Container contents
 The main included software is:
 - openxm (Risa/Asir)
 - vim-tiny
@@ -102,7 +102,7 @@ To exit the shell:
 ```bash
 exit
 ```
-# Notes
+## Notes
 - The container name has been changed to openxm.
 - Use `make run` if you want to work with an editor on the host side.
 - Use `make shell` if you want to use the container’s shell.
