@@ -1,79 +1,76 @@
-MathLibre-c is a project for building containers with mathematical software.
+# MathLibre-c
 
-数学ソフトウェア環境のためのコンテナを開発するプロジェクト
+MathLibre-c is a project for building containers for mathematical software environments.
 
-# 必要な環境
-- Linux + X11 + podman
-- Linux + Wayland + XWayland + podman
-- Windows + WSL2 + podman
-- macOS + Homebrew + qemu + podman
-
-のどれか
+# Requirements
+One of the following environments is required:
+- Linux + X11 + podman  
+- Linux + Wayland + XWayland + podman  
+- Windows + WSL2 + podman  
+- macOS + Homebrew + qemu + podman  
 
 ## Linux
-### パッケージ podman のインストール
-```
+### Install the podman package
+```bash
 apt install podman
 ```
-もしくは
-```
+or
+```bash
 dnf install podman
-``` 
-など
+``
+etc.
 
 ## Windows
-1. [WSL2のインストール/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
- - PowerShell 上で実行
-```
+1. [Install WSL2/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
+Run the following PowerShell:
+```powershell
 wsl --install
 ```
-2. WSL2 を起動後はLinuxと同様
+2. After satarting WSL2, follow the steps as for Linux
 
 ## macOS
-1. [Homebrewのインストール/Homebrew](https://brew.sh/)
+1. [Install Homebrew/Homebrew](https://brew.sh/)
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-2. podman のインストール
+2. Install podman
 ```
 brew install podman
 ```
-3. イメージはamd64なので，M?等のArm系CPUの場合はqemuが必要．IntelMacは必要なし．
+3. The image is for amd64  noso ARM-based CPUs such as M-series Macs, qemu is required. (Not required on Intel Macs.)
 ```
 brew install qemu
 ```
-4. Xのインストール
+4. Install X
 ```
 brew install --cask xquartz
 ```
-5. macOSの場合だけ，podman 利用にあたって，最初だけ machine (macOS用Linux) を用意する必要がある．
-```
+5. On macOS, you need to set up a Podman machine (a Linux VM for macOS) once before using podman:
+```bash
 podman machine init
-```
-```
 podman machine start
 ```
-6. XQuartzの実行
-```
+6. Launch XQuartz
+```bash
 open -a xquartz
 ```
-7. Xを用いる際は xhost の接続許可が必要
+7. When using X, you need to allow connections with xhost.
 ```
 xhost +localhost
 ```
 
-# コンテナの構築
-```
+# Build the container
+```bash
 make build
 ```
 
-# コンテナの内容
-主に収録されているソフトウェアは
+# Container contents
+The main included software is:
 - openxm (Risa/Asir)
 - vim-tiny
 
-## Risa/Asir の利用
-`make run`を実行後に OpenXM プロンプト
+## Using Risa/Asir
+After running `make run`, the OpenXM prompt appears:
 ```
 OpenXM/Risa/Asir-Contrib $Revision$ (20250117), Copyright 2000-2025, OpenXM.org committers
 helph(); [html help], ox_help(0); ox_help("keyword"); ox_grep("keyword");
@@ -81,45 +78,40 @@ helph(); [html help], ox_help(0); ox_help("keyword"); ox_grep("keyword");
 http://www.math.kobe-u.ac.jp/OpenXM/Current/doc/index-doc.html
 [2113] 
 ```
-が表示されたら Risa/Asir の命令を入力できる．
-コンテナの終了は Risa/Asir の終了命令
+You can then enter Risa/Asir commands.
+To exit the container, use the Risa/Asir exit command:
 ```
 quit;
 ```
 
-## shell の利用
-`make shell`を実行後に bash プロンプト
+## Using the shell
+After running `make shell`, the bash prompt appears:
 ```
 user@mathlibre:/work$ 
 ```
-が表示される．
-
-Risa/Asir を起動するには
+To start Risa/Asir:
 ```
 openxm fep asir
 ```
-
-Risa/Asir の終了は
+To exit Risa/Asir:
 ```
 quit;
 ```
-
-shellの終了は
+To exit the shell:
 ```
 exit
 ```
-
-## 注意点
-- コンテナ名称をopenxmに変更
-- ホスト側のエディタで作業したいときは `make run`
-- コンテナの shell を利用したいときは `make shell`
-- イメージファイルは展開すると約860MB
-- 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
-- root にはなれない．
-- パッケージを追加したいときは Containerfile に追加して `make build`
-- Hubへ未登録
+# Notes
+- The container name has been changed to openxm.
+- Use make run if you want to work with an editor on the host side.
+- Use make shell if you want to use the container’s shell.
+- The image size is about 860 MB when unpacked.
+- Currently, the working directory work is the directory where make run or make shell is executed.
+- You cannot become root inside the container.
+- To add packages, edit the Containerfile and run make build.
+- Not registered on any hub yet.
 
 # Reference
-Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
-https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers/index
 
+Podman: a container development tool similar to Docker, but it does not require a daemon.
+https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers/index
