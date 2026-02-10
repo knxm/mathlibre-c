@@ -10,6 +10,7 @@ MathLibre-c は数学ソフトウェア環境のためのコンテナを開発�
 - Linux + Wayland + XWayland + git + podman
 - Windows + WSL2 + git + podman
 - macOS + Homebrew + qemu + Xquartz + git + podman
+
 のどれか
 
 ### Linux
