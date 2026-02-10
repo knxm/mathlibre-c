@@ -4,21 +4,21 @@
 MathLibre-c は数学ソフトウェア環境のためのコンテナを開発するプロジェクトです．
 
 ## 必要な環境
-- Linux + X11 + podman
-- Linux + Wayland + XWayland + podman
-- Windows + WSL2 + podman
-- macOS + Homebrew + qemu + podman
+- Linux + X11 + git + podman
+- Linux + Wayland + XWayland + git + podman
+- Windows + WSL2 + git + podman
+- macOS + Homebrew + qemu + git + podman
 
 のどれか
 
 ### Linux
-パッケージ podman のインストール
+パッケージ git, podmant のインストール
 ```
-apt install podman
+apt install git podman
 ```
 もしくは
 ```
-dnf install podman
+dnf install git podman
 ``` 
 など
 
@@ -35,9 +35,9 @@ wsl --install
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-2. podman のインストール
+2. git, podman のインストール
 ```
-brew install podman
+brew install git podman
 ```
 3. イメージはamd64なので，M?等のArm系CPUの場合はqemuが必要．IntelMacは必要なし．
 ```
@@ -63,9 +63,19 @@ open -a xquartz
 xhost +localhost
 ```
 
-## コンテナの構築
+## mathlibre-c の取得
+```bash
+git clone https://github.com/knxm/mathlibre-c
 ```
-make build
+
+## ディレクトリ mathlibre-c への移動
+```
+cd mathlibre-c
+```
+
+## コンテナの取得
+```
+make pull
 ```
 
 ## コンテナの内容
@@ -108,6 +118,12 @@ quit;
 shellの終了は
 ```
 exit
+```
+
+## コンテナのビルド
+パッケージを追加したいときはコンテナイメージをビルドしてカスタマイズしてください．
+```
+make build
 ```
 
 ## 注意点
