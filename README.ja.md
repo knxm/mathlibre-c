@@ -63,7 +63,7 @@ open -a xquartz
 xhost +localhost
 ```
 
-# コンテナの構築
+## コンテナの構築
 ```
 make build
 ```
