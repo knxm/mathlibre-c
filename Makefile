@@ -70,7 +70,7 @@ RUN_OPTS = \
 # ------------------------
 # targets
 # ------------------------
-.PHONY: build run shell stop rm clean size logs
+.PHONY: build pull run shell clean size
 
 build:
 	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
@@ -84,17 +84,9 @@ run:
 shell:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
-stop:
-	$(ENGINE) stop $(NAME)
-
-rm:
-	$(ENGINE) rm $(NAME)
-
 clean:
 	$(ENGINE) rmi $(IMAGE)
 
 size:
 	$(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
 
-logs:
-	$(ENGINE) logs $(NAME)
