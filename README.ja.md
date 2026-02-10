@@ -1,7 +1,7 @@
-MathLibre-c is a project for building containers with mathematical software.
+# MathLibre-c
 [(English)](./README.md)
 
-数学ソフトウェア環境のためのコンテナを開発するプロジェクト
+MathLibre-c は数学ソフトウェア環境のためのコンテナを開発するプロジェクトです．
 
 # 必要な環境
 - Linux + X11 + podman
