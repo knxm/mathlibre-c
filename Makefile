@@ -1,9 +1,13 @@
 ENGINE     ?= podman
-IMAGE      ?= openxm:v0.1
-NAME       ?= openxm_v0.1
+REGISTRY   ?= ghcr.io
+OWNER      ?= knxm
+NAME       ?= openxm
+TAG        ?= latest
 HOSTNAME   ?= mathlibre
 WORKDIR    ?= /work
 REPOSITORY ?= ghcr.io/knxm/openxm:latest
+
+IMAGE ?= $(REGISTRY)/$(OWNER)/$(NAME):$(TAG)
 
 UNAME_S := $(shell uname -s)
 UNAME_R := $(shell uname -r)
@@ -73,7 +77,7 @@ build:
 	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
 pull:
-	$(ENGINE) pull $(REPOSITORY)
+	$(ENGINE) pull $(IMAGE)
 
 run:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
