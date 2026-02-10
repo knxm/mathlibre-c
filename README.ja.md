@@ -3,7 +3,7 @@
 
 MathLibre-c は数学ソフトウェア環境のためのコンテナを開発するプロジェクトです．
 
-# 必要な環境
+## 必要な環境
 - Linux + X11 + podman
 - Linux + Wayland + XWayland + podman
 - Windows + WSL2 + podman
@@ -11,8 +11,8 @@ MathLibre-c は数学ソフトウェア環境のためのコンテナを開発�
 
 のどれか
 
-## Linux
-### パッケージ podman のインストール
+### Linux
+パッケージ podman のインストール
 ```
 apt install podman
 ```
@@ -22,7 +22,7 @@ dnf install podman
 ``` 
 など
 
-## Windows
+### Windows
 1. [WSL2のインストール/Microsoft](https://learn.microsoft.com/ja-jp/windows/wsl/install)
  - PowerShell 上で実行
 ```
@@ -30,7 +30,7 @@ wsl --install
 ```
 2. WSL2 を起動後はLinuxと同様
 
-## macOS
+### macOS
 1. [Homebrewのインストール/Homebrew](https://brew.sh/)
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -68,7 +68,7 @@ xhost +localhost
 make build
 ```
 
-# コンテナの内容
+## コンテナの内容
 主に収録されているソフトウェアは
 - openxm (Risa/Asir)
 - vim-tiny
@@ -120,7 +120,7 @@ exit
 - パッケージを追加したいときは Containerfile に追加して `make build`
 - Hubへ未登録
 
-# Reference
+## Reference
 Podman : 仮想化コンテナ開発ツール Docker ライクだが，デーモンを必要としない．
 https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers/index
 
