@@ -5,7 +5,6 @@ NAME       ?= openxm
 TAG        ?= latest
 HOSTNAME   ?= mathlibre
 WORKDIR    ?= /work
-REPOSITORY ?= ghcr.io/knxm/openxm:latest
 
 IMAGE ?= $(REGISTRY)/$(OWNER)/$(NAME):$(TAG)
 
