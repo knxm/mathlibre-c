@@ -1,12 +1,12 @@
 ENGINE     ?= podman
 REGISTRY   ?= ghcr.io
 OWNER      ?= knxm
-NAME       ?= openxm
+APP_NAME       ?= openxm
 TAG        ?= latest
 HOSTNAME   ?= mathlibre
 WORKDIR    ?= /work
 
-IMAGE ?= $(REGISTRY)/$(OWNER)/$(NAME):$(TAG)
+IMAGE ?= $(REGISTRY)/$(OWNER)/$(APP_NAME):$(TAG)
 
 UNAME_S := $(shell uname -s)
 UNAME_R := $(shell uname -r)
@@ -55,7 +55,7 @@ endif
 # ------------------------
 RUN_OPTS = \
 	-it --rm \
-	--name $(NAME) \
+	--name $(APP_NAME) \
 	--hostname $(HOSTNAME) \
 	--userns=keep-id \
 	--platform=$(PLATFORM) \
