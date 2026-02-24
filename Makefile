@@ -4,7 +4,8 @@ OWNER      ?= knxm
 APP_NAME       ?= openxm
 TAG        ?= latest
 HOSTNAME   ?= mathlibre
-WORKDIR    ?= /work
+HOST_WORKDIR := $(CURDIR)/work
+WORKDIR    := /work
 
 IMAGE ?= $(REGISTRY)/$(OWNER)/$(APP_NAME):$(TAG)
 
@@ -64,7 +65,7 @@ RUN_OPTS = \
 	$(XAUTH) \
 	$(XVOL) \
 	$(XAUTHVOL) \
-	-v $(PWD):$(WORKDIR):Z \
+	-v "$(HOST_WORKDIR):$(WORKDIR)" \
 	-w $(WORKDIR)
 
 # ------------------------
