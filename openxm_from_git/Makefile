@@ -16,7 +16,7 @@ UID := $(shell id -u)
 GID := $(shell id -g)
 PWD := $(shell pwd)
 
-PLATFORM ?= linux/amd64
+PLATFORM ?= linux/arm64
 
 # ------------------------
 # Initialize X11

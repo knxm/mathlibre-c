@@ -2,8 +2,8 @@
 # https://nakanoryunosuke.github.io/programming/2026/02/10/Risa-Asir-install.html
 # https://github.com/NAKANORyunosuke
 
-FROM ubuntu:latest  
-# FROM debian:trixie-slim  
+# FROM ubuntu:latest  
+FROM debian:trixie-slim  
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y \  
     \  
