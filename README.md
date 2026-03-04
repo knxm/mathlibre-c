@@ -120,7 +120,7 @@ user@mathlibre:/work$
 
 To start Risa/Asir:
 ```bash
-openxm fep asir
+openxm asir
 ```
 
 To exit Risa/Asir:

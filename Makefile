@@ -80,7 +80,7 @@ pull:
 	$(ENGINE) pull --platform=$(PLATFORM) $(IMAGE)
 
 run:
-	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm fep asir
+	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm asir
 
 shell:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
