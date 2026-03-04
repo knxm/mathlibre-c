@@ -7,8 +7,6 @@ HOSTNAME   ?= mathlibre
 HOST_WORKDIR := $(CURDIR)/work
 WORKDIR    := /work
 
-IMAGE ?= $(REGISTRY)/$(OWNER)/$(APP_NAME):$(TAG)
-
 UNAME_S := $(shell uname -s)
 UNAME_R := $(shell uname -r)
 
@@ -16,7 +14,23 @@ UID := $(shell id -u)
 GID := $(shell id -g)
 PWD := $(shell pwd)
 
-PLATFORM ?= linux/arm64
+# アーキテクチャの自動取得
+ARCH := $(shell uname -m)
+
+# ホストのアーキテクチャに応じて PLATFORM を設定
+ifeq ($(ARCH),x86_64)
+	ARCH_TAB := amd64
+	PLATFORM := linux/amd64
+else 
+# macOS (Apple Silicon) 
+	ARCH_TAG := arm64
+	PLATFORM := linux/arm64
+endif
+
+# デフォルト値を設定（判定に失敗した場合のフォールバック）
+PLATFORM ?= linux/amd64
+TAG := $(ARCH_TAG)-latest
+IMAGE := $(REGISTRY)/$(OWNER)/$(APP_NAME):$(TAG)
 
 # ------------------------
 # Initialize X11
