@@ -85,7 +85,7 @@ RUN_OPTS = \
 # ------------------------
 # targets
 # ------------------------
-.PHONY: build pull run shell clean size
+.PHONY: build pull run shell clean size push
 
 build:
 	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
@@ -105,3 +105,6 @@ clean:
 size:
 	$(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
 
+# for maintainer
+push:
+	$(ENGINE) push $(IMAGE)
