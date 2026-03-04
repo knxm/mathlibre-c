@@ -140,7 +140,7 @@ user@mathlibre:/work$
 Risa/Asir を起動するには
 
 ```
-openxm fep asir
+openxm asir
 ```
 
 Risa/Asir の終了は
