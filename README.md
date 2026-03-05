@@ -94,7 +94,7 @@ The main included software is:
 
 ## Use Risa/Asir
 
-After running `make run`, the OpenXM prompt appears:
+After running `make` or `make run`, the OpenXM prompt appears:
 
 ```text
 OpenXM/Risa/Asir-Contrib $Revision$ (20250117), Copyright 2000-2025, OpenXM.org committers

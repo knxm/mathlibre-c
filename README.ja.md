@@ -110,7 +110,7 @@ cd mathlibre-c
 
 ## Risa/Asir の利用
 
-`make run`を実行後に OpenXM プロンプト
+`make`もしくは`make run`を実行後に OpenXM プロンプト
 
 ```
 OpenXM/Risa/Asir-Contrib $Revision$ (20250117), Copyright 2000-2025, OpenXM.org committers
