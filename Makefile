@@ -71,19 +71,16 @@ RUN_OPTS = \
 # ------------------------
 # targets
 # ------------------------
-.PHONY: build pull run shell clean size push
+.PHONY: run shell pull clean size build push
 
-build:
-	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
+run: pull
+	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm asir
+
+shell: pull
+	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
 pull:
 	$(ENGINE) pull --platform=$(PLATFORM) $(IMAGE)
-
-run:
-	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm asir
-
-shell:
-	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
 clean:
 	$(ENGINE) rmi $(IMAGE)
@@ -92,5 +89,8 @@ size:
 	$(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
 
 # for maintainer
+build:
+	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
+
 push:
 	$(ENGINE) push $(IMAGE)
