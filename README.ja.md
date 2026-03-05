@@ -174,8 +174,8 @@ make build
 - ホスト側のエディタで作業したいときは `make run`
 - コンテナの shell を利用したいときは `make shell`
 - イメージファイルは展開すると約860MB
-- 現状では作業場所 work は `make run` もしくは `make shell` したディレクトリ
-- root にはなれない．
+- 作業場所として work ディレクトリが用意されています．	
+- root にはなれません．
 - パッケージを追加したいときは Containerfile に追加して `make build`
 
 ## Reference

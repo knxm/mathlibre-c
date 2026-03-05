@@ -151,7 +151,7 @@ make build
 - Use `make run` if you want to work with an editor on the host side.
 - Use `make shell` if you want to use the container’s shell.
 - The image size is about 860 MB when unpacked.
-- Currently, the working directory work is the directory where `make run` or `make shell` is executed.
+- 'work' is mounted into the container as '/work'.
 - You cannot become root inside the container.
 - To add packages, edit the Containerfile and run `make build`.
 
