@@ -8,8 +8,8 @@ MathLibre-c is a project for building containers for mathematical software envir
 
 One of the following environments is required:
 
-- Linux + X11 + git + podman
-- Linux + Wayland + XWayland + git + podman
+- Linux + X11 + make + git + podman
+- Linux + Wayland + XWayland + make + git + podman
 - Windows + WSL2 + git + podman
 - macOS + Homebrew + qemu + Xquartz + git + podman
 
@@ -18,13 +18,13 @@ One of the following environments is required:
 Install packages
 
 ```bash
-apt install git podman
+apt install make git podman
 ```
 
 or
 
 ```bash
-dnf install git podman
+dnf install make git podman
 ```
 
 etc.
