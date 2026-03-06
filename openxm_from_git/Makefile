@@ -4,7 +4,13 @@ OWNER      ?= knxm
 APP_NAME   ?= openxm_from_git
 TAG        ?= latest
 HOSTNAME   ?= mathlibre
-HOST_WORKDIR := $(CURDIR)/work
+
+# Makefileが存在するディレクトリを取得
+SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+
+# その一つ上（親）を取得
+PARENT_DIR := $(abspath $(SELF_DIR)..)
+HOST_WORKDIR := $(PARENT_DIR)/work
 WORKDIR    := /work
 
 UNAME_S := $(shell uname -s)

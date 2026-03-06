@@ -1,4 +1,4 @@
-# /work
+# mathlibre-c/work
 
 This directory is mounted into the container as `/work`.
 
