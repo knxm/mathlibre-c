@@ -10,8 +10,8 @@ One of the following environments is required:
 
 - Linux + X11 + make + git + podman
 - Linux + Wayland + XWayland + make + git + podman
-- Windows + WSL2 + git + podman
-- macOS + Homebrew + qemu + Xquartz + git + podman
+- Windows + WSL2 + make + git + podman
+- macOS + Homebrew + qemu + Xquartz + make + git + podman
 
 ### Linux
 
