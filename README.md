@@ -51,7 +51,7 @@ wsl --install
 2. Install packages
 
 ```bash
-brew install git podman
+brew install make git podman
 ```
 
 3. The image is for amd64 noso ARM-based CPUs such as M-series Macs, qemu is required. (Not required on Intel Macs.)
