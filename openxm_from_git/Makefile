@@ -19,7 +19,7 @@ ARCH := $(shell uname -m)
 
 # ホストのアーキテクチャに応じて PLATFORM を設定
 ifeq ($(ARCH),x86_64)
-	ARCH_TAB := amd64
+	ARCH_TAG := amd64
 	PLATFORM := linux/amd64
 else 
 # macOS (Apple Silicon) 
