@@ -1,0 +1,71 @@
+FROM archlinux:latest
+
+# パッケージのインストール
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm --needed \
+    base-devel \
+    sagemath \
+    autoconf \
+    bison \
+    flex \
+    file \
+    curl \
+    git \
+    pkg-config \
+    libcerf \
+    ncurses \
+    xorg-server \
+    xorgproto \
+    gd \
+    libpng \
+    libjpeg-turbo \
+    cairo \
+    pango \
+    glib2 \
+    qt5-base \
+    qt5-tools \
+    qt5-svg \
+    texinfo \
+    sharutils \
+    texlive-bin \
+    texlive-core \
+    texlive-latexextra \
+    texlive-langjapanese \
+    ghostscript \
+    netpbm \
+    jdk-openjdk
+
+# OpenXM の取得
+RUN git clone https://github.com/openxm-org/OpenXM /OpenXM && \
+    git clone https://github.com/openxm-org/OpenXM_contrib2 /OpenXM_contrib2
+
+WORKDIR /OpenXM/src
+ENV PATH="/OpenXM/bin:${PATH}"
+
+# --- Containerfile 修正案 ---
+
+WORKDIR /OpenXM/src
+
+# 【重要】GCCのラッパーを作成して、常に古い規格とエラー無視フラグを強制する
+RUN echo '#!/bin/bash' > /usr/local/bin/gcc-wrapper && \
+    echo 'exec /usr/bin/gcc -std=gnu89 -fpermissive -w -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration "$@"' >> /usr/local/bin/gcc-wrapper && \
+    chmod +x /usr/local/bin/gcc-wrapper && \
+    ln -sf /usr/local/bin/gcc-wrapper /usr/local/bin/gcc && \
+    ln -sf /usr/local/bin/gcc-wrapper /usr/local/bin/cc
+
+# 環境変数の設定
+ENV PATH="/OpenXM/bin:${PATH}"
+ENV CFLAGS="-O2 -g -std=gnu89 -fpermissive -w -Wno-error=incompatible-pointer-types -I/OpenXM/src/kan96xx/Kan"
+
+# 1. 既存の修正（ox_pathfinder.c）
+RUN sed -i 's/static char \*addSlash();/static char *addSlash(char *p);/' /OpenXM/src/util/ox_pathfinder.c
+
+# 2. Configureを実行
+RUN make configure
+
+# 3. 不足しているヘッダーファイルのリンク（前回の修正を維持）
+RUN ln -sf /OpenXM/src/kan96xx/Kan/datatype.h /OpenXM/src/kan96xx/plugin/datatype.h
+
+# 4. ビルド実行
+# ラッパーが効いているため、通常の make で algnum.c も突破できるはずです
+RUN make

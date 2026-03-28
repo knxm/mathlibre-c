@@ -1,0 +1,11 @@
+/* test_fctr.rr */
+T0 = time()$
+A = (x + y + z + w + 1)^15$
+B = (x - y - z - w - 2)^15$
+C = A * B$  /* ここで巨大な多項式になる */
+print("Start Factorization...")$
+fctr(C);    /* これを元に戻すのに時間がかかる */
+T1 = time()$
+print("Time: ")$
+print(T1[0]-T0[0]);
+end$

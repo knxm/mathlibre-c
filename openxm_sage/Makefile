@@ -1,13 +1,16 @@
 ENGINE     ?= podman
-
-# -- Target Registry --
 REGISTRY   ?= ghcr.io
 OWNER      ?= knxm
-APP_NAME   ?= openxm
+APP_NAME   ?= openxm_sage
 TAG        ?= latest
 HOSTNAME   ?= mathlibre
-IMAGE = $(REGISTRY)/$(OWNER)/$(APP_NAME):$(TAG)
-HOST_WORKDIR := $(CURDIR)/work
+
+# Makefileが存在するディレクトリを取得
+SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+
+# その一つ上（親）を取得
+PARENT_DIR := $(abspath $(SELF_DIR)..)
+HOST_WORKDIR := $(PARENT_DIR)/work
 WORKDIR    := /work
 
 UNAME_S := $(shell uname -s)
@@ -17,7 +20,23 @@ UID := $(shell id -u)
 GID := $(shell id -g)
 PWD := $(shell pwd)
 
+# アーキテクチャの自動取得
+ARCH := $(shell uname -m)
+
+# ホストのアーキテクチャに応じて PLATFORM を設定
+ifeq ($(ARCH),x86_64)
+	ARCH_TAG := amd64
+	PLATFORM := linux/amd64
+else 
+# macOS (Apple Silicon) 
+	ARCH_TAG := arm64
+	PLATFORM := linux/arm64
+endif
+
+# デフォルト値を設定（判定に失敗した場合のフォールバック）
 PLATFORM ?= linux/amd64
+TAG := latest
+IMAGE := $(REGISTRY)/$(OWNER)/$(APP_NAME):$(TAG)
 
 # ------------------------
 # Initialize X11
@@ -74,10 +93,10 @@ RUN_OPTS = \
 # ------------------------
 .PHONY: run shell pull clean size build push
 
-run: 
+run: pull
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm asir
 
-shell: 
+shell: pull
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
 pull:
