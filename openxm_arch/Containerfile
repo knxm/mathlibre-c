@@ -3,8 +3,9 @@ FROM archlinux:latest
 # パッケージのインストール
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm --needed \
-    pacman -S --noconfirm --needed \
     base-devel \
+    clang \
+    llvm \
     git \
     wget \
     texinfo \
@@ -13,37 +14,57 @@ RUN pacman -Syu --noconfirm && \
     bison \
     jdk-openjdk \
     java-runtime-common \
-    texlive-bin
+    texlive-bin \
     libxaw \
     ncurses \
     freeglut
 
-# install AUR
+# --- 修正箇所：一般ユーザーの作成と権限付与 ---
+RUN useradd -m builduser && \
+    echo "builduser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# install AUR (yay)
 WORKDIR /tmp
-RUN git clone https://aur.archl
-inux.org/yai.git
+RUN git clone https://aur.archlinux.org/yay.git && \
+    chown -R builduser:builduser /tmp/yay
+
 WORKDIR /tmp/yay
-RUN makepkg -si
+# 一般ユーザーに切り替えてビルドを実行
+USER builduser
+RUN makepkg -si --noconfirm 
 
 # update yay
-RUN yay -Syu
-#
-RUN yay -S nkf latex2html texi2html sharutils
-RUN pacman -S emacs clang
-ENV CC=clang
+RUN yay -Syu --noconfirm
 
-# OpenXM の取得
+# 依存パッケージのインストール (不完全な行を修正)
+RUN yay -S --noconfirm nkf latex2html texi2html sharutils
+
+# rootに戻って後続の処理を継続
+USER root
+
+# OpenXM の取得とビルド
 RUN git clone https://github.com/openxm-org/OpenXM /OpenXM && \
-    git clone https://github.com/openxm-org/OpenXM_contrib2 /OpenXM_contrib2
+    git clone https://github.com/openxm-org/OpenXM_contrib2 /OpenXM_contrib2 
 
 WORKDIR /OpenXM/src
 ENV PATH="/OpenXM/bin:${PATH}"
+ENV CC=clang
+ENV CXX=clang++
+ENV CFLAGS="-w"
 
-WORKDIR /OpenXM/src
-RUN make configure
-RUN make install
+RUN CC=clang CXX=clang++ make configure 
+RUN CC=clang CXX=clang++ HOST_CC=clang make install
 WORKDIR /OpenXM/rc
-RUN make
+RUN make CC=clang CXX=clang++ HOST_CC=clang
 RUN cp openxm /usr/local/bin
-RUN openxm user-asir-mode.sh --local-yes
+#RUN openxm /OpenXM/rc/user-asir-mode.sh --local-yes
 
+RUN make && mkdir ~/bin && cp openxm ~/bin
+
+# Making user
+RUN useradd -m -s /bin/bash user
+USER user
+WORKDIR /home/user
+RUN mkdir -p /home/user/work
+
+CMD ["bash"]
