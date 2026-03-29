@@ -21,17 +21,17 @@ RUN pacman -Syu --noconfirm && \
     freeglut
 
 # --- 修正箇所：一般ユーザーの作成と権限付与 ---
-RUN useradd -m builduser && \
-    echo "builduser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN useradd -m -s /bin/bash user
+RUN echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # install AUR (yay)
 WORKDIR /tmp
 RUN git clone https://aur.archlinux.org/yay.git && \
-    chown -R builduser:builduser /tmp/yay
+    chown -R user:user /tmp/yay
 
 WORKDIR /tmp/yay
 # 一般ユーザーに切り替えてビルドを実行
-USER builduser
+USER user
 RUN makepkg -si --noconfirm 
 
 # update yay
@@ -40,8 +40,9 @@ RUN yay -Syu --noconfirm
 # 依存パッケージのインストール (不完全な行を修正)
 RUN yay -S --noconfirm nkf latex2html texi2html sharutils
 
-# rootに戻って後続の処理を継続
+# 特権設定を削除し、rootユーザーに戻して終了
 USER root
+RUN sed -i '/user ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers 
 
 # OpenXM の取得とビルド
 RUN git clone https://github.com/openxm-org/OpenXM /OpenXM && \
@@ -63,7 +64,7 @@ RUN openxm /OpenXM/src/asir-mode/use-asir-mode.sh --local-yes
 # RUN make && mkdir ~/bin && cp openxm ~/bin
 
 # Making user
-RUN useradd -m -s /bin/bash user
+# RUN useradd -m -s /bin/bash user
 USER user
 WORKDIR /home/user
 RUN mkdir -p /home/user/work
