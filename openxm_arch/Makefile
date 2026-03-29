@@ -110,7 +110,6 @@ size:
 
 # for maintainer
 build:
-	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
-
+	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) . 2>&1 | tee build.log
 push:
 	$(ENGINE) push $(IMAGE)
