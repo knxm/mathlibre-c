@@ -5,6 +5,7 @@ RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm --needed \
     base-devel \
     clang \
+    emacs \
     llvm \
     git \
     wget \
@@ -57,9 +58,9 @@ RUN CC=clang CXX=clang++ HOST_CC=clang make install
 WORKDIR /OpenXM/rc
 RUN make CC=clang CXX=clang++ HOST_CC=clang
 RUN cp openxm /usr/local/bin
-#RUN openxm /OpenXM/rc/user-asir-mode.sh --local-yes
+RUN openxm /OpenXM/src/asir-mode/use-asir-mode.sh --local-yes
 
-RUN make && mkdir ~/bin && cp openxm ~/bin
+# RUN make && mkdir ~/bin && cp openxm ~/bin
 
 # Making user
 RUN useradd -m -s /bin/bash user
