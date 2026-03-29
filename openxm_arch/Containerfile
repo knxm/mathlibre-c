@@ -2,6 +2,7 @@ FROM archlinux:latest
 
 # パッケージのインストール
 RUN pacman -Syu --noconfirm && \
+# sagemath \
     pacman -S --noconfirm --needed \
     base-devel \
     clang \
