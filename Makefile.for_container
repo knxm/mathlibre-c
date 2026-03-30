@@ -1,5 +1,5 @@
 #
-# This file is an experimental project for Apple container with Rosetta 2.
+# Experimental file for Apple container with Rosetta 2.
 # cf.) https://github.com/apple/container
 #
 ENGINE     ?= podman
