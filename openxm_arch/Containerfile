@@ -2,8 +2,8 @@ FROM archlinux:latest
 
 # パッケージのインストール
 RUN pacman -Syu --noconfirm && \
-#    sagemath \
     pacman -S --noconfirm --needed \
+    sagemath \
     base-devel \
     clang \
     emacs \

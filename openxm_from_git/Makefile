@@ -93,10 +93,10 @@ RUN_OPTS = \
 # ------------------------
 .PHONY: run shell pull clean size build push
 
-run: pull
+run:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) openxm asir
 
-shell: pull
+shell:
 	$(ENGINE) run $(RUN_OPTS) $(IMAGE) bash
 
 pull:
