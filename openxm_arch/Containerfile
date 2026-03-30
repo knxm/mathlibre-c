@@ -2,7 +2,7 @@ FROM archlinux:latest
 
 # パッケージのインストール
 RUN pacman -Syu --noconfirm && \
-# sagemath \
+#    sagemath \
     pacman -S --noconfirm --needed \
     base-devel \
     clang \
@@ -60,14 +60,12 @@ RUN CC=clang CXX=clang++ HOST_CC=clang make install
 WORKDIR /OpenXM/rc
 RUN make CC=clang CXX=clang++ HOST_CC=clang
 RUN cp openxm /usr/local/bin
-RUN openxm /OpenXM/src/asir-mode/use-asir-mode.sh --local-yes
 
 # RUN make && mkdir ~/bin && cp openxm ~/bin
 
-# Making user
-# RUN useradd -m -s /bin/bash user
 USER user
 WORKDIR /home/user
 RUN mkdir -p /home/user/work
+RUN openxm /OpenXM/src/asir-mode/use-asir-mode.sh --local-yes
 
 CMD ["bash"]
