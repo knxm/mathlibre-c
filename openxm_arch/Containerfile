@@ -1,5 +1,10 @@
 FROM archlinux:latest
 
+# キーリングの初期化
+RUN pacman-key --init && \
+    pacman-key --populate archlinux && \
+    pacman -Sy --noconfirm archlinux-keyring
+
 # パッケージのインストール
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm --needed \

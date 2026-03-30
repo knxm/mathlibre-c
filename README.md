@@ -4,6 +4,12 @@
 
 MathLibre-c is a project for building containers for mathematical software environments.
 
+Windows users can set up a Linux environment by installing WSL2. macOS users can use Unix toolsets as packages by installing Homebrew.
+
+To use containers, install the three packages make, git, and podman in your Linux (Unix) environment.
+
+After that, you can use Risa/Asir (OpenXM) with just the make command.
+
 ## Requirements
 
 One of the following environments is required:
