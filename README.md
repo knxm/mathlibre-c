@@ -12,11 +12,11 @@ After that, you can use Risa/Asir (OpenXM) with just the make command.
 
 ## Containers
 - mathlibre-c
-  - Standard environment amd64 deb，size:859MB
+  - Standard environment, amd64 deb，size:859MB
 - mathlibre-c/openxm_from_git
-  - amd64/arm64 source builded with github, size:3.92GB
+  - amd64/arm64, source builded with github, size:3.92GB
 - mathlibre-c/openxm_arch (experimental)
-  - amd64 source builded with github, size:5.02GB
+  - amd64, source builded with github, size:5.02GB
 - mathlibre-c/openxm_sage (experimental)
   - amd64 deb，base_container:sagemath, size:4.22GB
 
