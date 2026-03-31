@@ -13,13 +13,14 @@ Linux(Unix)環境にインストールしてください．
 
 ## コンテナの説明
 - mathlibre-c
-  - 標準環境 amd64 debパッケージ，コンテナサイズ859MB
+  - 標準環境 Debian(amd64) debパッケージ，コンテナサイズ859MB
 - mathlibre-c/openxm_from_git
-  - amd64/arm64 対応 github からのソースビルド，コンテナサイズ3.92GB
+  - Debian(amd64/arm64) 対応 github からのソースビルド，コンテナサイズ3.92GB
+  - Windows(amd64)/macOS(arm64) 両方に対応．Windows(aarch64) は未検証
 - mathlibre-c/openxm_arch（実験版）
-  - amd64 github からのソースビルド，コンテナサイズ5.02GB
+  - Arch(amd64) github からのソースビルド，コンテナサイズ5.02GB
 - mathlibre-c/openxm_sage（実験版）
-  - amd64 debパッケージ，sagemathコンテナに追加，コンテナサイズ4.22GB
+  - Ubuntu(amd64) debパッケージ，sagemathコンテナに追加，コンテナサイズ4.22GB
 
 ## 必要な環境
 
