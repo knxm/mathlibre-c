@@ -4,13 +4,22 @@
 
 MathLibre-c は数学ソフトウェア環境のためのコンテナを開発するプロジェクトです．
 
-Windowsユーザは WSL2 をインストールすることで Linux 環境を構築できます．
-macOSユーザは Homebrew をインストールすることで Unix のツール群をパッケージで利用できます．
+Windowsユーザは WSL2 をインストールすることで Linux 環境を構築できます．macOSユーザは Homebrew をインストールすることで Unix のツール群をパッケージで利用できます．
 
 コンテナを利用するためには make git podman の3つのパッケージを
 Linux(Unix)環境にインストールしてください．
 
 以後，make コマンドだけで Risa/Asir(OpenXM)を利用できます．
+
+## コンテナの説明
+- mathlibre-c
+-- 標準環境 amd64 debパッケージ，コンテナサイズ859MB
+- mathlibre-c/openxm_from_git
+-- amd64/arm64 対応 github からのソースビルド，コンテナサイズ3.92GB
+- mathlibre-c/openxm_arch（実験版）
+-- amd64 github からのソースビルド，コンテナサイズ5.02GB
+- mathlibre-c/openxm_sage（実験版）
+-- amd64 debパッケージ，sagemathコンテナに追加，コンテナサイズ4.22GB
 
 ## 必要な環境
 
