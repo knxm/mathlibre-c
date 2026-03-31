@@ -34,10 +34,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #ENV LANG=ja_JP.UTF-8
 
 # Making user
-RUN useradd -m -s /bin/bash user
-USER user
-WORKDIR /home/user
-RUN mkdir -p /home/user/work
+#RUN useradd -m -s /bin/bash user
+#USER user
+#WORKDIR /home/user
+#RUN mkdir -p /home/user/work
 
+WORKDIR /
 CMD ["bash"]
 

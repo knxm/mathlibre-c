@@ -1,15 +1,17 @@
 FROM archlinux:latest
 
+# mirror site
+RUN echo 'Server = http://mirrors.cat.net/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+
 # キーリングの初期化
 RUN pacman-key --init && \
     pacman-key --populate archlinux && \
     pacman -Sy --noconfirm archlinux-keyring
 
 # パッケージのインストール
-RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm --needed \
-    maxima-ecl \
-    sagemath \
+RUN pacman -Syyu --noconfirm && \
+    pacman -S --noconfirm maxima-ecl sagemath && sage --version
+RUN pacman -S --noconfirm \
     base-devel \
     clang \
     emacs \
@@ -25,7 +27,8 @@ RUN pacman -Syu --noconfirm && \
     texlive-bin \
     libxaw \
     ncurses \
-    freeglut
+    freeglut && \
+    pacman -Scc --noconfirm
 
 # --- 修正箇所：一般ユーザーの作成と権限付与 ---
 RUN useradd -m -s /bin/bash user
