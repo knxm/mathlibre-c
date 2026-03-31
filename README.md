@@ -149,7 +149,7 @@ To exit the shell:
 exit
 ```
 
-# Remove the container image
+## Remove the container image
 The container image is extracted into ~/.local. You can delete the container image with the following command.
 ```bash
 make clean
@@ -160,7 +160,7 @@ make clean
 make pull
 ```
 
-## Build the container image
+## Build the container image (for developers)
 
 For adding packages, edit Containerfile and rebuild it.
 ```bash
