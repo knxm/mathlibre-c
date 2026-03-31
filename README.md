@@ -149,6 +149,12 @@ To exit the shell:
 exit
 ```
 
+# Remove the container image
+The container image is extracted into ~/.local. You can delete the container image with the following command.
+```bash
+make clean
+```
+
 ## Get the container image
 ```bash
 make pull
