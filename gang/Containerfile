@@ -1,0 +1,84 @@
+# ベースイメージに Oracle Linux 7 を指定
+FROM oraclelinux:7
+
+# キャッシュのクリーンアップとリポジトリの更新、EPELおよびOptionalリポジトリのインストール
+RUN yum -y update && \
+    yum -y install oracle-epel-release-el7 && \
+    yum-config-manager --enable ol7_developer_EPEL --enable ol7_optional_latest
+
+# 指定されたパッケージ（および32bit版システム/開発ライブラリ群）のインストール
+RUN yum -y install \
+    gcc \
+    gcc-c++ \
+    glibc-devel.i686 \
+    expat \
+    expat-devel \
+    f2c \
+    blas \
+    lapack \
+    blas.i686 \
+    lapack.i686 \
+    f2c.i686 \
+    libf2c.i686 \
+    libgfortran.i686 \
+    compat-libstdc++-296.i686 \
+    libstdc++.i686 \
+    expat.i686 \
+    libpng.i686 \
+    glib2.i686 \
+    gtk2.i686 \
+    mesa-libGL.i686 \
+    mesa-libGLU.i686 \
+    libXmu.i686 \
+    libXt.i686 \
+    libSM.i686 \
+    libICE.i686 \
+    libXext.i686 \
+    libX11.i686 \
+    libXi.i686 \
+    compat-libtiff3.i686
+
+# --- 【アップデート】不足しているレガシーシンボルに バーチャルテーブル関数 を追加して偽装生成 ---
+RUN echo 'void __tfi(void){} void __tfv(void){} void __tff(void){} \
+          void __doadv__H1Zd_Pt7complex1ZX01RCt7complex1ZX01_Rt7complex1ZX01(void){} \
+          void exp__H1Zd_RCt7complex1ZX01_t7complex1ZX01(void){} \
+          void log__H1Zd_RCt7complex1ZX01_t7complex1ZX01(void){} \
+          void sin__H1Zd_RCt7complex1ZX01_t7complex1ZX01(void){} \
+          void cos__H1Zd_RCt7complex1ZX01_t7complex1ZX01(void){} \
+          void sqrt__H1Zd_RCt7complex1ZX01_t7complex1ZX01(void){} \
+          void pow__H1Zd_RCt7complex1ZX01X01_t7complex1ZX01(void){} \
+          void __ls__7ostreamc(void){} \
+          void __ls__H1Zd_R7ostreamRCt7complex1ZX01_R7ostream(void){} \
+          void __check_eh_spec(void){} \
+          void __vt_13strstreambase(void){} \
+          void __vt_13strstreambase_3ios(void){}' > /tmp/dummy_v296.c && \
+    gcc -m32 -shared -fPIC -o /usr/lib/libdummy_v296.so /tmp/dummy_v296.c && \
+    rm -f /tmp/dummy_v296.c
+
+# --- レガシーライブラリの互換リンク作成 (力技) ---
+RUN ln -s /usr/lib/libdummy_v296.so /usr/lib/libstdc++-libc6.2-2.so.3 && \
+    ln -s /usr/lib/libexpat.so.1 /usr/lib/libexpat.so.0 && \
+    ln -s /usr/lib/libpng15.so.15 /usr/lib/libpng.so.2 && \
+    ln -s /usr/lib/libglib-2.0.so.0 /usr/lib/libglib-1.2.so.0 && \
+    ln -s /usr/lib/libgmodule-2.0.so.0 /usr/lib/libgmodule-1.2.so.0 && \
+    ln -s /usr/lib/libgtk-x11-2.0.so.0 /usr/lib/libgtk-1.2.so.0 && \
+    ln -s /usr/lib/libgdk-x11-2.0.so.0 /usr/lib/libgdk-1.2.so.0 && \
+    ln -s /usr/lib/libGLU.so.1 /usr/lib/libgtkgl.so.5 && \
+    ln -s /usr/lib/libgfortran.so.3 /usr/lib/libf2c.so.0 && \
+    chmod 755 /usr/lib/lib*.so*
+
+# 独自ライブラリ（/usr/local/lib）をシステムに認識させる設定
+RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/gang.conf && ldconfig
+
+# 1. ホスト側にある RPM ファイルをコンテナ内の /tmp/ にコピー
+COPY cmclab-020918-1.i386.rpm /tmp/
+COPY gang-020918-1.i386.rpm /tmp/
+
+# 2. 強制インストール
+RUN rpm -ivh --nodeps --nosignature /tmp/gang-020918-1.i386.rpm && \
+    rpm -ivh --nodeps --nosignature /tmp/cmclab-020918-1.i386.rpm && \
+    rm -f /tmp/*.rpm && \
+    yum clean all
+
+# コンテナ起動時のデフォルトコマンド
+CMD ["/bin/bash"]
