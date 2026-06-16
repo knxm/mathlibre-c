@@ -19,6 +19,10 @@ PWD := $(shell pwd)
 
 PLATFORM ?= linux/amd64
 
+# --- [機能拡張] ソースアーカイブのダウンロードURLの定義 ---
+# ※ 実際のアーカイブが置いてある正しいURLに差し替えてください。
+GANG_SRC_URL ?= https://web.archive.org/web/20130615154424/http://www.gang.umass.edu/software/download/gangsrc-020918.tar.gz
+
 # ------------------------
 # Initialize X11
 # ------------------------
@@ -89,9 +93,16 @@ clean:
 size:
 	$(ENGINE) image inspect $(IMAGE) | jq '.[0].Size'
 
+# --- [機能拡張] アーカイブが存在しない場合に自動取得するターゲット ---
+gangsrc-020918.tar.gz:
+	@echo "Source archive not found. Fetching from $(GANG_SRC_URL)..."
+	curl -L -o $@ $(GANG_SRC_URL)
+
 # for maintainer
-build:
+# build ターゲットの依存関係に gangsrc-020918.tar.gz を指定しました
+build: gangsrc-020918.tar.gz
 	$(ENGINE) build --platform=$(PLATFORM) -t $(IMAGE) .
 
 push:
 	$(ENGINE) push $(IMAGE)
+

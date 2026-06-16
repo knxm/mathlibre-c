@@ -6,7 +6,6 @@ ENV LANG=C.UTF-8
 USER root
 
 # 必要なツールのインストール
-# 確定パッケージに加えて、新登場の GLUT ライブラリ（freeglut3-dev）と TIFF ライブラリを安全なループで確実に仕留めます。
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     gnupg \
@@ -22,22 +21,19 @@ RUN apt-get update && apt-get install -y \
     f2c \
     blas-dev \
     lapack-dev \
- && for pkg in libtiff4-dev libtiff-dev freeglut3-dev libglut-dev; do \
-        apt-get install -y $pkg || echo "Skipping unavailable package candidate: $pkg"; \
-    done \
+    libtiff4-dev \
+    freeglut3-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 # 作業ディレクトリの作成
 WORKDIR /usr/local/src
 
-# 手元のファイルをコピーして展開
+# 手元のファイルをコピーして展開、および全ての修正パッチを一斉適用
 COPY gangsrc-020918.tar.gz .
 RUN tar -zxvf gangsrc-020918.tar.gz \
-    && rm gangsrc-020918.tar.gz
-
-# --- [STEP 1 対策] vector.H を std::vector ベースの「.fill() 持ち拡張クラス」として完全定義 ---
-RUN cd gangsrc-020918/BASE/base \
+    && rm gangsrc-020918.tar.gz \
+    && cd gangsrc-020918/BASE/base \
     && printf "%s\n" \
        "#ifndef _BASE_VECTOR_H" \
        "#define _BASE_VECTOR_H" \
@@ -55,22 +51,15 @@ RUN cd gangsrc-020918/BASE/base \
        "    void fill(const T& val, size_t n) { this->assign(n, val); }" \
        "  };" \
        "}" \
-       "#endif" > vector.H
-
-# --- [STEP 2 対策] slist のインクルードパスと名前空間を GCC 3.3 向けに修正 ---
-RUN cd gangsrc-020918 \
-    && sed -i 's|<slist>|<ext/slist>|g' BASE/base/Pool.H BASE/vrml/Parser.H \
-    && sed -i 's|std::slist|__gnu_cxx::slist|g' BASE/base/Pool.H BASE/base/Pool.C BASE/vrml/Parser.H
-
-# --- [STEP 3 対策] System.C の set_new_handler を ISO C++ 準拠に修正 ---
-RUN cd gangsrc-020918/BASE/base \
+       "#endif" > vector.H \
+    && cd ../.. \
+    && sed -i 's|<slist>|<ext/slist>|g' BASE/base/Pool.H BASE/vrml/Parser.H GEOM/geom/surface0/Boundary.H \
+    && sed -i 's|std::slist|__gnu_cxx::slist|g' BASE/base/Pool.H BASE/base/Pool.C BASE/vrml/Parser.H GEOM/geom/surface0/Boundary.H GEOM/geom/surface0/Boundary.C GEOM/geom/surface0/Normal.C \
+    && cd BASE/base \
     && echo '#include <new>' > System.C.tmp \
     && cat System.C >> System.C.tmp \
     && mv System.C.tmp System.C \
-    && sed -i 's|set_new_handler|std::set_new_handler|g' System.C
-
-# --- [STEP 4 対策] PrintNumber.H の中身を安全なコードに丸ごと差し替える（print/printMを追加） ---
-RUN cd gangsrc-020918/BASE/base \
+    && sed -i 's|set_new_handler|std::set_new_handler|g' System.C \
     && printf "%s\n" \
        "#ifndef _BASE_PRINTNUMBER_H" \
        "#define _BASE_PRINTNUMBER_H" \
@@ -81,10 +70,7 @@ RUN cd gangsrc-020918/BASE/base \
        "  template <class A> inline void print(std::ostream& os, const A& a, unsigned int p=0) { os << a; }" \
        "  template <class A> inline void printM(std::ostream& os, const A& a, unsigned int p=0) { os << a; }" \
        "}" \
-       "#endif" > PrintNumber.H
-
-# --- [STEP 5 対策] Stl.H の中身を完全上書き ---
-RUN cd gangsrc-020918/BASE/base \
+       "#endif" > PrintNumber.H \
     && printf "%s\n" \
        "#ifndef _BASE_STL_H_FIXED" \
        "#define _BASE_STL_H_FIXED" \
@@ -125,15 +111,19 @@ RUN cd gangsrc-020918/BASE/base \
        "template <class T, class A> inline void fill(base::vector<T, A>& v, const T& val, unsigned int, unsigned int) { std::fill(v.begin(), v.end(), val); }" \
        "template <class T, class A> inline void fill(base::vector<base::vector<T, A> >& v, const T& val) { base::do_2d_fill(v, val); }" \
        "template <class T, class A> inline void fill(base::vector<base::vector<T, A> >& v, const T& val, unsigned int, unsigned int) { base::do_2d_fill(v, val); }" \
-       "#endif" > Stl.H
-
-# --- [STEP 6 対策] Parser.C に見当たらない assert.h を明示的にインクルード ---
-RUN cd gangsrc-020918 \
-    && sed -i '1i #include <assert.h>' BASE/vrml/Parser.C
-
-# --- [STEP 7 対策] Xml.C の誤ったポインタポインタキャスト (XML_Parser *) を修正 ---
-RUN cd gangsrc-020918 \
-    && sed -i 's|(XML_Parser \*)0|(XML_Parser)0|g' BASE/parser/Xml.C
+       "#endif" > Stl.H \
+    && cd ../.. \
+    && sed -i '1i #include <assert.h>' BASE/vrml/Parser.C \
+    && sed -i 's|(XML_Parser \*)0|(XML_Parser)0|g' BASE/parser/Xml.C \
+    && sed -i '1i #include <iostream>\nusing namespace std;' WIDGET/app/ui/Commands.C \
+    && sed -i '1i #include <iostream>' WIDGET/app/cmd/Message.C \
+    && sed -i '1i #include <iostream>' GEOM/geom/io/MathLexer.C \
+    && sed -i 's/Material[[:space:]]*&/surface::Material \&/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
+    && sed -i 's/Material[[:space:]]\+const[[:space:]]*&/surface::Material const \&/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
+    && sed -i 's/const[[:space:]]\+Material[[:space:]]*&/const surface::Material \&/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
+    && sed -i 's/surface::surface::Material/surface::Material/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
+    && sed -i 's/surfacegl::surface::Material/surface::Material/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
+    && sed -i 's|(\*this)\[id\]|_[id]|g' GEOM/geom/surfacegl/MaterialSet.H
 
 # ソースのビルドを実行
 RUN cd gangsrc-020918 \
