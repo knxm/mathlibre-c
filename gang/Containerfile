@@ -53,8 +53,8 @@ RUN tar -zxvf gangsrc-020918.tar.gz \
        "}" \
        "#endif" > vector.H \
     && cd ../.. \
-    && sed -i 's|<slist>|<ext/slist>|g' BASE/base/Pool.H BASE/vrml/Parser.H GEOM/geom/surface0/Boundary.H \
-    && sed -i 's|std::slist|__gnu_cxx::slist|g' BASE/base/Pool.H BASE/base/Pool.C BASE/vrml/Parser.H GEOM/geom/surface0/Boundary.H GEOM/geom/surface0/Boundary.C GEOM/geom/surface0/Normal.C \
+    && sed -i 's|<slist>|<ext/slist>|g' BASE/base/Pool.H BASE/vrml/Parser.H GEOM/geom/surface0/*.H GEOM/geom/surface0/*.C \
+    && sed -i 's|std::slist|__gnu_cxx::slist|g' BASE/base/Pool.H BASE/base/Pool.C BASE/vrml/Parser.H GEOM/geom/surface0/*.H GEOM/geom/surface0/*.C \
     && cd BASE/base \
     && echo '#include <new>' > System.C.tmp \
     && cat System.C >> System.C.tmp \
@@ -123,7 +123,10 @@ RUN tar -zxvf gangsrc-020918.tar.gz \
     && sed -i 's/const[[:space:]]\+Material[[:space:]]*&/const surface::Material \&/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
     && sed -i 's/surface::surface::Material/surface::Material/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
     && sed -i 's/surfacegl::surface::Material/surface::Material/g' GEOM/geom/surfacegl/MaterialSet.H GEOM/geom/surfacegl/MaterialSet.C GEOM/geom/surfacegl/Surface.H GEOM/geom/surfacegl/Surface.C \
-    && sed -i 's|(\*this)\[id\]|_[id]|g' GEOM/geom/surfacegl/MaterialSet.H
+    && sed -i 's|(\*this)\[id\]|_[id]|g' GEOM/geom/surfacegl/MaterialSet.H \
+    && sed -i '/namespace triang {/a using namespace std;' GEOM/triang/Triangulator.C \
+    && sed -i 's/[[:space:]]\+throw()[[:space:]]*//g' GEOM/imagegl/Postscript*.H GEOM/imagegl/Postscript*.C \
+    && sed -i 's/throw([[:space:]]*::io::WriteException[[:space:]]*)//g' GEOM/imagegl/Postscript*.H GEOM/imagegl/Postscript*.C
 
 # ソースのビルドを実行
 RUN cd gangsrc-020918 \
