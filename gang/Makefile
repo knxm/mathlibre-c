@@ -59,7 +59,7 @@ RUN_OPTS = \
 	-it --rm \
 	--name $(APP_NAME) \
 	--hostname $(HOSTNAME) \
-	--userns=keep-id \
+	#--userns=keep-id \
 	--platform=$(PLATFORM) \
 	-u $(UID):$(GID) \
 	-e DISPLAY=$(X11_DISPLAY) \
